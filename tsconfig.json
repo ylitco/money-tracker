@@ -8,6 +8,9 @@
     },
     {
       "path": "./apps/accounting/client"
+    },
+    {
+      "path": "./libs/ui-kit"
     }
   ],
   "ts-node": {
