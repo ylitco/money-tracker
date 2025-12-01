@@ -1,8 +1,13 @@
 packages:
-  - 'packages/*'
-  - 'apps/accounting/*'
-  - 'libs/*'
+  - packages/*
+  - apps/accounting/*
+  - libs/*
+
 autoInstallPeers: true
+
 onlyBuiltDependencies:
+  - '@parcel/watcher'
   - '@swc/core'
-  - 'nx'
+  - cypress
+  - esbuild
+  - nx
