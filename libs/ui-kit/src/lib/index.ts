@@ -1,0 +1,1 @@
+export { classNamePropAdapter } from './classNamePropAdapter';
