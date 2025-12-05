@@ -1,20 +1,14 @@
-import { Input } from '@base-ui-components/react';
 import { TextField, TextFieldProps } from '@mui/material';
-import { classNamePropAdapter } from '../../../../lib';
+import { classNamePropAdapter, sizePropAdapter } from '../../../../lib';
+import { InputProps } from '../../models/common-props';
 
-interface TextareaProps extends Input.Props {
-  label?: string;
+interface TextareaProps extends InputProps {
   rows?: TextFieldProps['rows'];
-}
-
-const sizeMap: Record<number, TextFieldProps['size']> = {
-  0: 'small',
-  1: 'medium',
 }
 
 export function Textarea({ className, size, ...props }: TextareaProps) {
   const adaptedClassName = classNamePropAdapter(className);
-  const adaptedSize = size ? sizeMap[size] : 'medium';
+  const adaptedSize = sizePropAdapter(size);
 
   return <TextField className={adaptedClassName} size={adaptedSize} {...props} multiline />;
 }
