@@ -8,6 +8,7 @@ interface AutocompleteProps<ItemType>
 }
 
 export function Autocomplete<ItemType>({
+  autoHighlight,
   label,
   options = [],
   ...props
@@ -22,11 +23,15 @@ export function Autocomplete<ItemType>({
     opts = options.map((o) => props.itemToStringValue(o));
   }
 
+  const adaptedAutoHighlight =
+    autoHighlight === 'always' ? true : autoHighlight;
+
   return (
     <ImplAutocomplete
-      {...props}
+      autoHighlight={adaptedAutoHighlight}
       options={opts}
       renderInput={(params) => <TextField {...params} label={label} />}
+      {...props}
     />
   );
 }
