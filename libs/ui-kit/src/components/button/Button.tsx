@@ -3,16 +3,14 @@ import {
   Button as ImplButton,
   ButtonProps as ImplButtonProps,
 } from '@mui/material';
+import { classNamePropAdapter } from '../../lib';
 
 type ButtonProps = BaseButton.Props & {
   variant: ImplButtonProps['variant'];
 };
 
 export function Button({ className, ...props }: ButtonProps) {
-  const adaptedClassName =
-    typeof className === 'function'
-      ? className({} as BaseButton.State)
-      : className;
+  const adaptedClassName = classNamePropAdapter(className);
 
   return <ImplButton className={adaptedClassName} {...props} />;
 }
