@@ -70,7 +70,7 @@ export function Number({ id, label, size, ...props }: NumberProps) {
                 </NumberField.Decrement>
               </InputAdornment>
             }
-            sx={{ pr: 0 }}
+            sx={{ pr: 0, width: '100%' }}
           />
         )}
       />
