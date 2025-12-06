@@ -29,6 +29,9 @@ importers:
       '@mui/x-date-pickers':
         specifier: ^8.18.0
         version: 8.18.0(@emotion/react@11.14.0(@types/react@19.2.3)(react@19.2.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.3)(react@19.2.0))(@types/react@19.2.3)(react@19.2.0))(@mui/material@7.3.5(@emotion/react@11.14.0(@types/react@19.2.3)(react@19.2.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.3)(react@19.2.0))(@types/react@19.2.3)(react@19.2.0))(@types/react@19.2.3)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@mui/system@7.3.5(@emotion/react@11.14.0(@types/react@19.2.3)(react@19.2.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.3)(react@19.2.0))(@types/react@19.2.3)(react@19.2.0))(@types/react@19.2.3)(react@19.2.0))(@types/react@19.2.3)(dayjs@1.11.19)(luxon@3.7.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       dayjs:
         specifier: ^1.11.19
         version: 1.11.19
