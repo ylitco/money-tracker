@@ -7,8 +7,8 @@ export function Form({ children, className, ...props }: BaseForm.Props) {
   const adaptedClassName = classNamePropAdapter(className);
 
   return (
-    <BaseForm className={clsx(classes.form, adaptedClassName)} {...props}>
+    <form className={clsx(classes.form, adaptedClassName)} {...props}>
       {children}
-    </BaseForm>
+    </form>
   );
 }
