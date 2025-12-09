@@ -1,3 +1,3 @@
 export * from './button';
-export * from './form/ui';
+export * from './form';
 export * from './input/ui';
