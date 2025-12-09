@@ -1,12 +1,20 @@
-import { Form, FormField, useAppForm } from '@money-tracker/ui-kit';
+import {
+  Form,
+  FormField,
+  useAppForm,
+  useMediaQuery,
+} from '@money-tracker/ui-kit';
+import dayjs from 'dayjs';
 import { OperationSchema } from '../../models';
 import { AccountingFormProps, OperationForm } from './Form.types';
 
 const defaultValues: OperationForm = {
+  transactionDate: dayjs().format('YYYY-MM-DD'),
   amount: null,
 };
 
 export function AccountingForm({ onSubmit }: AccountingFormProps) {
+  const isSmallMobile = useMediaQuery('(max-width: 320px)');
   const form = useAppForm({
     defaultValues,
     onSubmit: ({ value: operation }) => {
@@ -30,6 +38,44 @@ export function AccountingForm({ onSubmit }: AccountingFormProps) {
           form.handleSubmit();
         }}
       >
+        <form.AppField
+          name="transactionDate"
+          validators={{
+            onChange: OperationSchema.shape.transactionDate,
+          }}
+          children={(field) => {
+            return (
+              <FormField
+                description="Введите дату совершения операции"
+                errors={field.state.meta.errors}
+                label="Дата операции"
+                name="transactionDate"
+                control={({ id }) =>
+                  isSmallMobile ? (
+                    <field.DatePicker
+                      value={dayjs(field.state.value)}
+                      onChange={(newDate) => {
+                        field.handleChange(
+                          newDate ? dayjs(newDate).format('YYYY-MM-DD') : null
+                        );
+                      }}
+                    />
+                  ) : (
+                    <field.DateCalendar
+                      id={id}
+                      value={dayjs(field.state.value)}
+                      onValueChange={(newDate) => {
+                        field.handleChange(
+                          newDate ? dayjs(newDate).format('YYYY-MM-DD') : null
+                        );
+                      }}
+                    />
+                  )
+                }
+              />
+            );
+          }}
+        />
         <form.AppField
           name="amount"
           validators={{

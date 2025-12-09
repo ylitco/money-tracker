@@ -1,7 +1,10 @@
 import { z } from 'zod';
 import { OperationSchema } from '../../models';
 
+type DateISOString = string;
+
 export interface OperationForm {
+  transactionDate: DateISOString | null;
   amount: number | null;
   note?: string;
 }
