@@ -25,7 +25,7 @@ export function AccountingForm({ onSubmit }: AccountingFormProps) {
       console.dir(props);
     },
     validators: {
-      onChange: OperationSchema,
+      onSubmit: OperationSchema,
     },
   });
 
