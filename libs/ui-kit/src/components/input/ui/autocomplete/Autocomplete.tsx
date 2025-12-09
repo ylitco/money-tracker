@@ -9,6 +9,7 @@ interface AutocompleteProps<ItemType>
 
 export function Autocomplete<ItemType>({
   autoHighlight,
+  itemToStringValue,
   label,
   options = [],
   ...props
@@ -18,9 +19,9 @@ export function Autocomplete<ItemType>({
   if (isStringArray(options)) {
     opts = options;
   } else {
-    assertPropMethod(props, 'itemToStringValue');
+    assertFunction(itemToStringValue, 'itemToStringValue');
 
-    opts = options.map((o) => props.itemToStringValue(o));
+    opts = options.map((o) => itemToStringValue(o));
   }
 
   const adaptedAutoHighlight =
@@ -40,12 +41,9 @@ function isStringArray(value: unknown[]): value is string[] {
   return value.every((item) => typeof item === 'string');
 }
 
-function assertPropMethod<PropObject, PropKey extends keyof PropObject>(
-  propObject: PropObject,
-  propKey: PropKey
-): asserts propObject is PropObject &
-  Record<PropKey, NonNullable<PropObject[PropKey]>> {
-  if (!propObject[propKey]) {
-    throw new Error(`${String(propKey)} is required`);
-  }
+function assertFunction<ArgType>(
+  func: ((arg: ArgType) => string) | undefined,
+  name: string
+): asserts func is (arg: ArgType) => string {
+  if (!func) throw new Error(`${name} is required`);
 }
