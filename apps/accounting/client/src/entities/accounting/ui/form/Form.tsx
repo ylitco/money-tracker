@@ -53,6 +53,34 @@ export function AccountingForm({ onSubmit }: AccountingFormProps) {
             );
           }}
         />
+        <form.AppField
+          name="note"
+          validators={{
+            onChange: OperationSchema.shape.note,
+          }}
+          children={(field) => {
+            return (
+              <FormField
+                description="Введите комментарий в отношении операции"
+                dirty={field.state.meta.isDirty}
+                invalid={!field.state.meta.isValid}
+                label="Комментарий"
+                name="note"
+                errors={field.state.meta.errors}
+                control={(props) => (
+                  <field.Textarea
+                    rows={4}
+                    value={field.state.value}
+                    onValueChange={field.handleChange}
+                    onBlur={field.handleBlur}
+                    {...props}
+                  />
+                )}
+                touched={field.state.meta.isTouched}
+              />
+            );
+          }}
+        />
         <form.Button variant="contained" type="submit">
           Add
         </form.Button>
