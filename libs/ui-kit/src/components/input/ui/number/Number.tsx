@@ -4,22 +4,16 @@ import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { sizePropAdapter } from '../../../../lib';
-import { InputProps } from '../../models/common-props';
 
-type NumberProps = NumberField.Root.Props & InputProps;
+type NumberProps = NumberField.Root.Props;
 
-export function Number({ id, label, size, ...props }: NumberProps) {
-  const adaptedSize = sizePropAdapter(size);
-
+export function Number({ id, ...props }: NumberProps) {
   return (
     <NumberField.Root {...props}>
-      {!!label && label}
       <NumberField.Input
         id={id}
         render={(props, state) => (
           <OutlinedInput
-            label={label}
             inputRef={props.ref}
             value={state.inputValue}
             onBlur={props.onBlur}
@@ -48,23 +42,19 @@ export function Number({ id, label, size, ...props }: NumberProps) {
                 }}
               >
                 <NumberField.Increment
-                  render={
-                    <IconButton size={adaptedSize} aria-label="Increase" />
-                  }
+                  render={<IconButton size="medium" aria-label="Increase" />}
                 >
                   <KeyboardArrowUpIcon
-                    fontSize={adaptedSize}
+                    fontSize="medium"
                     sx={{ transform: 'translateY(2px)' }}
                   />
                 </NumberField.Increment>
 
                 <NumberField.Decrement
-                  render={
-                    <IconButton size={adaptedSize} aria-label="Decrease" />
-                  }
+                  render={<IconButton size="medium" aria-label="Decrease" />}
                 >
                   <KeyboardArrowDownIcon
-                    fontSize={adaptedSize}
+                    fontSize="medium"
                     sx={{ transform: 'translateY(-2px)' }}
                   />
                 </NumberField.Decrement>
