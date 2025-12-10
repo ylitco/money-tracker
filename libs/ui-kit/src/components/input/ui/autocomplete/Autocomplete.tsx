@@ -1,49 +1,105 @@
-import { Autocomplete as BaseAutocomplete } from '@base-ui-components/react';
-import { Autocomplete as ImplAutocomplete, TextField } from '@mui/material';
+import {
+  Autocomplete as BaseAutocomplete,
+  Input,
+} from '@base-ui-components/react';
+import {
+  Autocomplete as ImplAutocomplete,
+  type AutocompleteProps as ImplAutocompleteProps,
+  TextField,
+} from '@mui/material';
+import { ElementType, useCallback } from 'react';
+import { InputProps } from '../../models/common-props';
 
 interface AutocompleteProps<ItemType>
-  extends BaseAutocomplete.Root.Props<ItemType> {
+  extends Omit<
+      BaseAutocomplete.Root.Props<ItemType>,
+      'onValueChange' | 'value'
+    >,
+    Omit<InputProps, 'onValueChange' | 'value'> {
   label?: string;
+  onValueChange?: (
+    value: string | null,
+    eventDetails: BaseAutocomplete.Root.ChangeEventDetails
+  ) => void;
   options?: ItemType[];
+  getValueId: (item: ItemType) => string;
+  value: BaseAutocomplete.Root.Props<ItemType>['value'] | null;
 }
 
 export function Autocomplete<ItemType>({
   autoHighlight,
+  disabled,
+  getValueId,
   itemToStringValue,
   label,
+  name,
+  onValueChange,
   options = [],
+  value,
   ...props
 }: AutocompleteProps<ItemType>) {
-  let opts: string[] = [];
-
-  if (isStringArray(options)) {
-    opts = options;
-  } else {
-    assertFunction(itemToStringValue, 'itemToStringValue');
-
-    opts = options.map((o) => itemToStringValue(o));
-  }
-
   const adaptedAutoHighlight =
     autoHighlight === 'always' ? true : autoHighlight;
 
+  const handleChange = useCallback<
+    Exclude<
+      ImplAutocompleteProps<
+        ItemType,
+        false,
+        false,
+        false,
+        ElementType
+      >['onChange'],
+      undefined
+    >
+  >(
+    (_e, newValue) => {
+      onValueChange?.(newValue ? getValueId(newValue) : null, {
+        allowPropagation() {
+          this.isPropagationAllowed = true;
+        },
+        cancel() {
+          this.isCanceled = true;
+        },
+        event: new Event('change'),
+        isCanceled: false,
+        isPropagationAllowed: false,
+        reason: 'none',
+        trigger: undefined,
+      });
+    },
+    [getValueId, onValueChange]
+  );
+
   return (
-    <ImplAutocomplete
-      autoHighlight={adaptedAutoHighlight}
-      options={opts}
-      renderInput={(params) => <TextField {...params} label={label} />}
+    <Input
+      disabled={disabled}
+      name={name}
       {...props}
+      render={() => {
+        const selectedOption = value
+          ? options.find((o) => getValueId(o) === value)
+          : null;
+
+        return (
+          <ImplAutocomplete<ItemType>
+            autoHighlight={adaptedAutoHighlight}
+            disabled={disabled}
+            getOptionKey={(option) => getValueId(option) ?? 1}
+            getOptionLabel={(option) => itemToStringValue?.(option) || ''}
+            id={props.id}
+            onChange={handleChange}
+            options={options}
+            renderInput={(params) => (
+              <TextField {...params} label={label} name={name} />
+            )}
+            isOptionEqualToValue={(option) =>
+              value ? getValueId(option) === value : false
+            }
+            value={selectedOption ?? null}
+          />
+        );
+      }}
     />
   );
-}
-
-function isStringArray(value: unknown[]): value is string[] {
-  return value.every((item) => typeof item === 'string');
-}
-
-function assertFunction<ArgType>(
-  func: ((arg: ArgType) => string) | undefined,
-  name: string
-): asserts func is (arg: ArgType) => string {
-  if (!func) throw new Error(`${name} is required`);
 }
