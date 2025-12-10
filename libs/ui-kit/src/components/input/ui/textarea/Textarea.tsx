@@ -50,6 +50,7 @@ export function Textarea({
             onChange={handleChange}
             size={adaptedSize}
             value={props.value}
+            rows={props.rows}
           />
         );
       }}
