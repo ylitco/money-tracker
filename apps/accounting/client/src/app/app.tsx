@@ -1,11 +1,18 @@
 // Uncomment this line to use CSS modules
 // import styles from './app.module.scss';
-import NxWelcome from './nx-welcome';
+import { useState } from 'react';
+import { AccountingForm } from '../entities/accounting';
+import { OperationRecord } from '../entities/accounting/models';
 
 export function App() {
+  const [operationHistory, setOperationHistory] = useState<OperationRecord[]>([]);
+
   return (
     <div>
-      <NxWelcome title="accounting-client" />
+      <AccountingForm onSubmit={(operation) => setOperationHistory((oh) => [operation, ...oh])} />
+        <pre>
+          {JSON.stringify(operationHistory, null, 2)}
+        </pre>
     </div>
   );
 }
