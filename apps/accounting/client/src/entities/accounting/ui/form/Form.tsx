@@ -1,4 +1,5 @@
 import {
+  AutocompleteRef,
   Form,
   FormField,
   useAppForm,
@@ -13,6 +14,7 @@ import {
   OperationSchema,
 } from '../../models';
 import { AccountingFormProps } from './Form.types';
+import { useRef } from 'react';
 
 const defaultValues: OperationForm = {
   transactionDate: dayjs().format('YYYY-MM-DD'),
@@ -23,11 +25,13 @@ const defaultValues: OperationForm = {
 
 export function AccountingForm({ onSubmit }: AccountingFormProps) {
   const isSmallMobile = useMediaQuery('(max-width: 320px)');
+  const debitAccountFieldRef = useRef<AutocompleteRef>(null);
   const form = useAppForm({
     defaultValues,
     onSubmit: ({ value: operation }) => {
       onSubmit(OperationSchema.parse(operation));
       form.reset();
+      debitAccountFieldRef.current?.focus();
     },
     onSubmitInvalid(props) {
       console.dir(props);
@@ -105,6 +109,7 @@ export function AccountingForm({ onSubmit }: AccountingFormProps) {
                       field.handleChange(accountNumber as AccountNumber | null)
                     }
                     options={MOCK_CHART_OF_ACCOUNT}
+                    ref={debitAccountFieldRef}
                     value={field.state.value}
                   />
                 )}
