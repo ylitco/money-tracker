@@ -13,6 +13,7 @@ import {
   OperationForm,
   OperationSchema,
 } from '../../models';
+import { useAccountingFormText } from './Form.i18n';
 import { AccountingFormProps } from './Form.types';
 import { useRef } from 'react';
 
@@ -24,6 +25,7 @@ const defaultValues: OperationForm = {
 };
 
 export function AccountingForm({ onSubmit }: AccountingFormProps) {
+  const text = useAccountingFormText();
   const isSmallMobile = useMediaQuery('(max-width: 320px)');
   const debitAccountFieldRef = useRef<AutocompleteRef>(null);
   const form = useAppForm({
@@ -81,11 +83,11 @@ export function AccountingForm({ onSubmit }: AccountingFormProps) {
                     />
                   )
                 }
-                description="Введите дату совершения операции"
+                description={text.fields.transactionDate.description}
                 dirty={field.state.meta.isDirty}
                 errors={field.state.meta.errors}
                 invalid={!field.state.meta.isValid}
-                label="Дата операции"
+                label={text.fields.transactionDate.label}
                 name={field.name}
                 touched={field.state.meta.isTouched}
               />
@@ -113,11 +115,11 @@ export function AccountingForm({ onSubmit }: AccountingFormProps) {
                     value={field.state.value}
                   />
                 )}
-                description="Введите счёт на который были зачислены средства"
+                description={text.fields.debitAccount.description}
                 dirty={field.state.meta.isDirty}
                 errors={field.state.meta.errors}
                 invalid={!field.state.meta.isValid}
-                label="Дебет по счёту"
+                label={text.fields.debitAccount.label}
                 name={field.name}
                 touched={field.state.meta.isTouched}
               />
@@ -144,11 +146,11 @@ export function AccountingForm({ onSubmit }: AccountingFormProps) {
                     value={field.state.value}
                   />
                 )}
-                description="Введите счёт с которого были списаны средства"
+                description={text.fields.creditAccount.description}
                 dirty={field.state.meta.isDirty}
                 errors={field.state.meta.errors}
                 invalid={!field.state.meta.isValid}
-                label="Кредит по счёту"
+                label={text.fields.creditAccount.label}
                 name={field.name}
                 touched={field.state.meta.isTouched}
               />
@@ -170,11 +172,11 @@ export function AccountingForm({ onSubmit }: AccountingFormProps) {
                     value={field.state.value}
                   />
                 )}
-                description="Введите сумму совершённой операции"
+                description={text.fields.amount.description}
                 dirty={field.state.meta.isDirty}
                 errors={field.state.meta.errors}
                 invalid={!field.state.meta.isValid}
-                label="Сумма операции"
+                label={text.fields.amount.label}
                 name={field.name}
                 touched={field.state.meta.isTouched}
               />
@@ -198,19 +200,19 @@ export function AccountingForm({ onSubmit }: AccountingFormProps) {
                     value={field.state.value ?? ''}
                   />
                 )}
-                description="Введите комментарий в отношении операции"
+                description={text.fields.note.description}
                 dirty={field.state.meta.isDirty}
                 errors={field.state.meta.errors}
                 invalid={!field.state.meta.isValid}
-                label="Комментарий"
+                label={text.fields.note.label}
                 name={field.name}
                 touched={field.state.meta.isTouched}
               />
             );
           }}
         />
-        <form.Button variant="contained" type="submit">
-          Add
+        <form.Button variant="contained" type="submit" name="submit">
+          {text.actions.submit}
         </form.Button>
       </Form>
     </section>

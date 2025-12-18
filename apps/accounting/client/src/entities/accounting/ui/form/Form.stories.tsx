@@ -1,20 +1,9 @@
-import { LocalizationProvider } from '@money-tracker/ui-kit';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { ruRU } from '@mui/x-date-pickers/locales';
-import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
-import 'dayjs/locale/ru';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
+import { expect, within, userEvent, waitFor, screen } from 'storybook/test';
+import { withLocalization } from '~/shared/storybook';
 import { AccountingForm } from './Form';
-
-const withLocalization: Decorator = (Story) => (
-  <LocalizationProvider
-    adapterLocale="ru"
-    dateAdapter={AdapterDayjs}
-    localeText={ruRU.components.MuiLocalizationProvider.defaultProps.localeText}
-  >
-    <Story />
-  </LocalizationProvider>
-);
+import { accountingFormText } from './Form.i18n';
 
 const meta = {
   component: AccountingForm,
@@ -26,8 +15,47 @@ export default meta;
 type Story = StoryObj<typeof AccountingForm>;
 
 export const Primary = {
+  name: 'Fill & Submit the Form',
   args: {},
   render: ({ onSubmit, ...args }) => (
     <AccountingForm onSubmit={action('submited')} {...args} />
   ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const user = userEvent.setup();
+
+    const debitAccountInput = canvas.getByLabelText(accountingFormText.fields.debitAccount.label);
+    const creditAccountInput = canvas.getByLabelText(accountingFormText.fields.creditAccount.label);
+    const amountInput = canvas.getByLabelText(accountingFormText.fields.amount.label);
+    const noteTextarea = canvas.getByLabelText(accountingFormText.fields.note.label);
+    const submitButton = canvas.getByRole('button', { name: accountingFormText.actions.submit });
+
+    await user.click(debitAccountInput);
+    await user.keyboard('Продукты');
+    await waitFor(async () => {
+      // MUI Autocomplete renders options in a portal, use screen instead of canvas
+      const option = await screen.findByText(/Продукты/);
+      await user.click(option);
+    });
+
+    await user.click(creditAccountInput);
+    await user.keyboard('Кред');
+    await waitFor(async () => {
+      // MUI Autocomplete renders options in a portal, use screen instead of canvas
+      const option = await screen.findByText(/Кредитная карта 100 дней без %/);
+      await user.click(option);
+    });
+
+    await user.click(amountInput);
+    await user.keyboard('5000');
+
+    await user.click(noteTextarea);
+    await user.keyboard('Оплачены продукты в Пятёрочке');
+
+    await user.click(submitButton);
+
+    await waitFor(() => {
+      expect(debitAccountInput).toHaveFocus();
+    });
+  },
 } satisfies Story;
