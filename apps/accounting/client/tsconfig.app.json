@@ -42,10 +42,19 @@
     "**/*.stories.jsx",
     "**/*.stories.tsx"
   ],
-  "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
+  "include": [
+    "src/**/*.js",
+    "src/**/*.jsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/__mocks__/**/*.json"
+  ],
   "references": [
     {
       "path": "../../../libs/ui-kit/tsconfig.lib.json"
+    },
+    {
+      "path": "../../../libs/ui-sdk/tsconfig.lib.json"
     }
   ]
 }

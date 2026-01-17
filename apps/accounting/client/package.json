@@ -7,5 +7,8 @@
   },
   "devDependencies": {
     "@money-tracker/ui-kit": "workspace:*"
+  },
+  "dependencies": {
+    "@money-tracker/ui-sdk": "link:../../../libs/ui-sdk"
   }
 }
