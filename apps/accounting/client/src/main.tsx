@@ -4,6 +4,7 @@ import { ruRU } from '@mui/x-date-pickers/locales';
 import 'dayjs/locale/ru';
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
+import '@money-tracker/ui-sdk/styles';
 import App from './app/app';
 
 const root = ReactDOM.createRoot(
