@@ -3,7 +3,7 @@ import { action } from 'storybook/actions';
 import { expect, within, userEvent, waitFor, screen } from 'storybook/test';
 import { withLocalization } from '~/shared/storybook';
 import { AccountingForm } from './Form';
-import { accountingFormText } from './Form.i18n';
+import { formLocale } from './Form.i18n';
 
 const meta = {
   component: AccountingForm,
@@ -24,11 +24,11 @@ export const Primary = {
     const canvas = within(canvasElement);
     const user = userEvent.setup();
 
-    const debitAccountInput = canvas.getByLabelText(accountingFormText.fields.debitAccount.label);
-    const creditAccountInput = canvas.getByLabelText(accountingFormText.fields.creditAccount.label);
-    const amountInput = canvas.getByLabelText(accountingFormText.fields.amount.label);
-    const noteTextarea = canvas.getByLabelText(accountingFormText.fields.note.label);
-    const submitButton = canvas.getByRole('button', { name: accountingFormText.actions.submit });
+    const debitAccountInput = canvas.getByLabelText(formLocale.fields.debitAccount.label);
+    const creditAccountInput = canvas.getByLabelText(formLocale.fields.creditAccount.label);
+    const amountInput = canvas.getByLabelText(formLocale.fields.amount.label);
+    const noteTextarea = canvas.getByLabelText(formLocale.fields.note.label);
+    const submitButton = canvas.getByRole('button', { name: formLocale.actions.submit });
 
     await user.click(debitAccountInput);
     await user.keyboard('Продукты');

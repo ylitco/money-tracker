@@ -13,7 +13,7 @@ import {
   OperationForm,
   OperationSchema,
 } from '../../models';
-import { useAccountingFormText } from './Form.i18n';
+import { useFormLocale } from './Form.i18n';
 import { AccountingFormProps } from './Form.types';
 import { useRef } from 'react';
 
@@ -25,7 +25,7 @@ const defaultValues: OperationForm = {
 };
 
 export function AccountingForm({ onSubmit }: AccountingFormProps) {
-  const text = useAccountingFormText();
+  const locale = useFormLocale();
   const isSmallMobile = useMediaQuery('(max-width: 320px)');
   const debitAccountFieldRef = useRef<AutocompleteRef>(null);
   const form = useAppForm({
@@ -83,11 +83,11 @@ export function AccountingForm({ onSubmit }: AccountingFormProps) {
                     />
                   )
                 }
-                description={text.fields.transactionDate.description}
+                description={locale.fields.transactionDate.description}
                 dirty={field.state.meta.isDirty}
                 errors={field.state.meta.errors}
                 invalid={!field.state.meta.isValid}
-                label={text.fields.transactionDate.label}
+                label={locale.fields.transactionDate.label}
                 name={field.name}
                 touched={field.state.meta.isTouched}
               />
@@ -115,11 +115,11 @@ export function AccountingForm({ onSubmit }: AccountingFormProps) {
                     value={field.state.value}
                   />
                 )}
-                description={text.fields.debitAccount.description}
+                description={locale.fields.debitAccount.description}
                 dirty={field.state.meta.isDirty}
                 errors={field.state.meta.errors}
                 invalid={!field.state.meta.isValid}
-                label={text.fields.debitAccount.label}
+                label={locale.fields.debitAccount.label}
                 name={field.name}
                 touched={field.state.meta.isTouched}
               />
@@ -146,11 +146,11 @@ export function AccountingForm({ onSubmit }: AccountingFormProps) {
                     value={field.state.value}
                   />
                 )}
-                description={text.fields.creditAccount.description}
+                description={locale.fields.creditAccount.description}
                 dirty={field.state.meta.isDirty}
                 errors={field.state.meta.errors}
                 invalid={!field.state.meta.isValid}
-                label={text.fields.creditAccount.label}
+                label={locale.fields.creditAccount.label}
                 name={field.name}
                 touched={field.state.meta.isTouched}
               />
@@ -172,11 +172,11 @@ export function AccountingForm({ onSubmit }: AccountingFormProps) {
                     value={field.state.value}
                   />
                 )}
-                description={text.fields.amount.description}
+                description={locale.fields.amount.description}
                 dirty={field.state.meta.isDirty}
                 errors={field.state.meta.errors}
                 invalid={!field.state.meta.isValid}
-                label={text.fields.amount.label}
+                label={locale.fields.amount.label}
                 name={field.name}
                 touched={field.state.meta.isTouched}
               />
@@ -200,11 +200,11 @@ export function AccountingForm({ onSubmit }: AccountingFormProps) {
                     value={field.state.value ?? ''}
                   />
                 )}
-                description={text.fields.note.description}
+                description={locale.fields.note.description}
                 dirty={field.state.meta.isDirty}
                 errors={field.state.meta.errors}
                 invalid={!field.state.meta.isValid}
-                label={text.fields.note.label}
+                label={locale.fields.note.label}
                 name={field.name}
                 touched={field.state.meta.isTouched}
               />
@@ -212,7 +212,7 @@ export function AccountingForm({ onSubmit }: AccountingFormProps) {
           }}
         />
         <form.Button variant="contained" type="submit" name="submit">
-          {text.actions.submit}
+          {locale.actions.submit}
         </form.Button>
       </Form>
     </section>

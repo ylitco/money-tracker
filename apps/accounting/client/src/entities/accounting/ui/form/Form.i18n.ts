@@ -1,4 +1,4 @@
-export const accountingFormText = {
+export const formLocale = {
   fields: {
     transactionDate: {
       label: 'Дата операции',
@@ -26,8 +26,8 @@ export const accountingFormText = {
   },
 } as const;
 
-export type AccountingFormText = typeof accountingFormText;
+export type FormLocale = typeof formLocale;
 
-export function useAccountingFormText(): AccountingFormText {
-  return accountingFormText;
+export function useFormLocale(): FormLocale {
+  return formLocale;
 }
