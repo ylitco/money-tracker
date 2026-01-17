@@ -1,0 +1,1 @@
+export { getAccountName } from './getAccountName';

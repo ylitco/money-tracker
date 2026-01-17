@@ -5,7 +5,7 @@ export interface Account {
   subaccount?: number;
   number: string;
   type: 'active' | 'passive';
-  acceptedOn: Date;
+  acceptedOn: string;
   goal?: number;
   openingBalance: number;
 }

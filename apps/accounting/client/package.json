@@ -9,6 +9,7 @@
     "@money-tracker/ui-kit": "workspace:*"
   },
   "dependencies": {
+    "@money-tracker/data-sdk": "link:../../../libs/data-sdk",
     "@money-tracker/ui-sdk": "link:../../../libs/ui-sdk"
   }
 }
