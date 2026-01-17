@@ -1,0 +1,62 @@
+{
+  "name": "@money-tracker/data-sdk",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "development": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./accounting-notes": "./data/accounting-notes.json",
+    "./accounting-history": "./data/accounting-history.json"
+  },
+  "nx": {
+    "sourceRoot": "libs/data-sdk/src",
+    "targets": {
+      "build": {
+        "executor": "@nx/js:swc",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "options": {
+          "outputPath": "libs/data-sdk/dist",
+          "main": "libs/data-sdk/src/index.ts",
+          "tsConfig": "libs/data-sdk/tsconfig.lib.json",
+          "skipTypeCheck": true,
+          "stripLeadingPaths": true
+        }
+      },
+      "generate-accounting-history": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "bun run libs/data-sdk/src/scripts/generate-accounting-history.ts",
+          "cwd": "{workspaceRoot}"
+        }
+      },
+      "generate-accounting-notes": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "bun run libs/data-sdk/src/scripts/generate-accounting-notes.ts",
+          "cwd": "{workspaceRoot}"
+        }
+      },
+      "generate-chart-of-accounts": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "bun run libs/data-sdk/src/scripts/generate-chart-of-accounts.ts",
+          "cwd": "{workspaceRoot}"
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "@swc/helpers": "~0.5.11"
+  }
+}

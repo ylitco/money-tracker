@@ -14,6 +14,9 @@
     },
     {
       "path": "./libs/ui-sdk"
+    },
+    {
+      "path": "./libs/data-sdk"
     }
   ],
   "ts-node": {
