@@ -1,13 +1,6 @@
 import { utils } from 'xlsx';
 import { readBalanceWorkbook } from './balance-reader.js';
-
-type Transaction = {
-  date: string;
-  debit: string;
-  credit: string;
-  amount: number;
-  note: string;
-};
+import { Transaction } from 'src/models/index.ts';
 
 export async function parse() {
   const workbook = await readBalanceWorkbook();

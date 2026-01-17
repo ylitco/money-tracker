@@ -1,23 +1,6 @@
 import { utils } from 'xlsx';
 import { readBalanceWorkbook } from './balance-reader.js';
-
-export interface Account {
-  name: string;
-  section: string;
-  account: number;
-  subaccount?: number;
-  number: string;
-  type: 'active' | 'passive';
-  acceptedOn: Date;
-  goal?: number;
-  openingBalance: number;
-}
-
-export interface ChartOfAccounts {
-  acceptedOn: Date;
-  status: 'draft' | 'active' | 'archive';
-  accounts: Array<Account>;
-}
+import { Account } from 'src/models/index.ts';
 
 export async function parse() {
   const workbook = await readBalanceWorkbook();
